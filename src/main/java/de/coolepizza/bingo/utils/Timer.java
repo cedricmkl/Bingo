@@ -8,19 +8,23 @@ import org.bukkit.Bukkit;
 import org.bukkit.Particle;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.EventListener;
+
 public class Timer {
     public int remainingtime;
     public boolean paused;
     public Timer(){
         remainingtime = 3600;
+        paused = true;
         BukkitRunnable runnable = new BukkitRunnable() {
             @Override
             public void run() {
                 if(isPaused()){
                     Bukkit.getOnlinePlayers().forEach(player -> {
                         player.spigot().sendMessage(ChatMessageType.ACTION_BAR , new TextComponent("§cWarte..."));
-                        player.spawnParticle(Particle.FLAME , player.getLocation() , 10);
                     });
+                }else {
+
                 }
             }
         };

@@ -6,6 +6,7 @@ import de.coolepizza.bingo.utils.Timer;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
+
 public final class Bingo extends JavaPlugin {
     private static Bingo instance;
     private static Timer timer;
@@ -13,7 +14,7 @@ public final class Bingo extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
-
+        timer = new Timer();
         saveConfig();
 
         Bukkit.getPluginManager().registerEvents(new Listeners(), this);
