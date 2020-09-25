@@ -5,15 +5,14 @@ import de.coolepizza.bingo.Bingo;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
-import org.bukkit.Particle;
 import org.bukkit.scheduler.BukkitRunnable;
-
-import java.util.EventListener;
 
 public class Timer {
     public int remainingtime;
     public boolean paused;
+    public String information;
     public Timer(){
+        information = "§7Bingo §a" + Bingo.getInstance().getDescription().getVersion() + " §7by CoolePizza";
         remainingtime = 3600;
         paused = true;
         BukkitRunnable runnable = new BukkitRunnable() {
@@ -21,10 +20,16 @@ public class Timer {
             public void run() {
                 if(isPaused()){
                     Bukkit.getOnlinePlayers().forEach(player -> {
-                        player.spigot().sendMessage(ChatMessageType.ACTION_BAR , new TextComponent("§cWarte..."));
+                        player.spigot().sendMessage(ChatMessageType.ACTION_BAR , new TextComponent(information));
                     });
                 }else {
-
+                    Bukkit.getOnlinePlayers().forEach(player -> {
+                        player.spigot().sendMessage(ChatMessageType.ACTION_BAR , new TextComponent("§7Noch " + Utils.shortInteger(remainingtime)));
+                    });
+                    if (remainingtime == 0){
+                        Bingo.getInstance().end();
+                        cancel();
+                    }
                 }
             }
         };
@@ -37,5 +42,9 @@ public class Timer {
 
     public boolean isPaused() {
         return paused;
+    }
+
+    public void setInformation(String information) {
+        this.information = information;
     }
 }

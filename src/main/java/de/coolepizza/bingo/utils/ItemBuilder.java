@@ -6,6 +6,7 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ItemBuilder {
@@ -25,6 +26,12 @@ public class ItemBuilder {
     }
     public ItemBuilder setLore(String... s){
         itemMeta.setLore(Arrays.asList(s));
+        return this;
+    }
+    public ItemBuilder addLore(String s){
+        ArrayList<String> lore = (ArrayList<String>) itemMeta.getLore();
+        lore.add(s);
+        itemMeta.setLore(lore);
         return this;
     }
     public ItemBuilder setUnbreakable(boolean s){
@@ -48,7 +55,7 @@ public class ItemBuilder {
         return itemStack;
     }
     public ItemBuilder enchant(Enchantment en , int level){
-    itemMeta.addEnchant(en , level, true);
+    itemStack.addUnsafeEnchantment(en , level);
     return this;
     }
 }

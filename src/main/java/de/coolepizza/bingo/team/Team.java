@@ -11,15 +11,26 @@ public enum Team {
     GREEN(Material.GREEN_BED , 5),
     CYAN(Material.CYAN_BED , 6),
     BLACK(Material.BLACK_BED , 7),
-    BROWN(Material.BROWN_BED , 8);
+    BROWN(Material.BROWN_BED , 8),
+    SPECTATOR(Material.BEDROCK , 9);
 
     int teamid;
+    Material mat;
     Team(Material selectionitems , int teamid){
+
         this.teamid = teamid;
+        mat = selectionitems;
     }
 
     public String getScoreboardPrefix() {
+        if (this == SPECTATOR){
+            return "Spec | ";
+        }
         return "T" + teamid + " | ";
+    }
+
+    public Material getMat() {
+        return mat;
     }
 
     public int getTeamid() {
