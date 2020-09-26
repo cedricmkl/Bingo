@@ -20,6 +20,7 @@ public class BingoSettings {
         this.maxplayersinteam = maxplayersinteam;
         this.items = items;
         this.difficulty = difficulty;
+        System.out.println("Creating BingoSettings");
     }
     public void openSettingsInventory(Player player){
         Inventory settings = Bukkit.createInventory(null ,9*5 , "§9Bingo §7>> §9Einstellungen");

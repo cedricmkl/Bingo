@@ -1,6 +1,7 @@
 package de.coolepizza.bingo;
 
 import de.coolepizza.bingo.commands.BingoCommand;
+import de.coolepizza.bingo.commands.ItemsCommand;
 import de.coolepizza.bingo.commands.ResetCommand;
 import de.coolepizza.bingo.events.Listeners;
 import de.coolepizza.bingo.manager.BingoManager;
@@ -30,6 +31,7 @@ public final class Bingo extends JavaPlugin {
     private static Bingo instance;
     private static Timer timer;
     private static BingoManager bingoManager;
+    public static final String prefix = "§7[§aBINGO§7] §a";
     private boolean wasreset;
 
     @Override
@@ -79,6 +81,7 @@ public final class Bingo extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new Listeners(), this);
         getCommand("reset").setExecutor(new ResetCommand());
         getCommand("bingo").setExecutor(new BingoCommand());
+        getCommand("items").setExecutor(new ItemsCommand());
 
         ScoreboardUtils.insert(15 , "§c");
         ScoreboardUtils.insert(14 , "§9Deine Plazierung: §7N/A");

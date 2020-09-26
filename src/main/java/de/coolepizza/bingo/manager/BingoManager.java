@@ -9,17 +9,21 @@ import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.UUID;
+
 public class BingoManager {
     public BingoState bingoState;
     private BingoSettings bingosettings;
     private Cuboid bedrock;
     private TeamManager teamManager;
+    private ItemManager itemManager;
 
     public BingoManager(){
-        teamManager = new TeamManager();
-
         bingoState = BingoState.SETTINGS;
         bingosettings = new BingoSettings(1 , 9 , BingoSettings.BingoDifficulty.NORMAl);
+
+        teamManager = new TeamManager();
+        itemManager = new ItemManager();
         BukkitRunnable r = new BukkitRunnable() {
             @Override
             public void run() {
@@ -37,8 +41,10 @@ public class BingoManager {
                         block.setType(Material.BEDROCK);
                     }
                     for (Block block : bedrock2.getBlocks()) {
-                        block.setType(Material.AIR);
+                        block.setType(Material.AIR );
                     }
+                    w.setGameRule(GameRule.DO_DAYLIGHT_CYCLE , false);
+                    w.setGameRule(GameRule.DO_WEATHER_CYCLE , false);
                 }
             }
         };
@@ -64,6 +70,27 @@ public class BingoManager {
             player.playSound(player.getLocation() , Sound.ENTITY_PLAYER_LEVELUP , 1 ,1);
             player.getInventory().clear();
             player.getInventory().addItem(new ItemBuilder(Material.WHITE_BED).setDisplayname("§9Teamauswahl").build());
+            if (player.hasPermission("orav.admin")){
+                player.getInventory().setItem(8 , new ItemBuilder(Material.LIME_DYE).setDisplayname("§aRunde starten").build());
+            }
+        });
+    }
+
+    public void startIngameState(){
+        bingoState = BingoState.INGAME;
+        itemManager.start();
+        Bukkit.getOnlinePlayers().forEach(player -> {
+            player.closeInventory();
+            player.playSound(player.getLocation() , Sound.ENTITY_PLAYER_LEVELUP , 1 ,1);
+            player.getInventory().clear();
+            player.sendMessage(Bingo.prefix + "Die Runde startet jetzt, versuche alle Items zu bekommen! !");
+           getBedrock().getBlocks().forEach(block -> {
+                block.setType(Material.AIR);
+            });
+            for (UUID uuid : Bingo.getBingoManager().getTeamManager().getPlayersInTeam(Team.SPECTATOR)) {
+                Bukkit.getPlayer(uuid).setGameMode(GameMode.SPECTATOR);
+            }
+            Bingo.getTimer().paused = false;
         });
     }
 

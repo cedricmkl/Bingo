@@ -30,6 +30,8 @@ public class ItemBuilder {
     }
     public ItemBuilder addLore(String s){
         ArrayList<String> lore = (ArrayList<String>) itemMeta.getLore();
+        if (lore == null)
+            lore = new ArrayList<>();
         lore.add(s);
         itemMeta.setLore(lore);
         return this;

@@ -1,6 +1,8 @@
 package de.coolepizza.bingo.utils;
 
+import org.apache.commons.lang.WordUtils;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 
 public class Utils {
     public static String shortInteger(int duration) {
@@ -37,5 +39,8 @@ public class Utils {
             string = ChatColor.DARK_GREEN + String.valueOf(string) + seconds + ChatColor.DARK_GREEN;
         }
         return string;
+    }
+    public static String getItemName(Material material){
+        return WordUtils.capitalize(material.name());
     }
 }

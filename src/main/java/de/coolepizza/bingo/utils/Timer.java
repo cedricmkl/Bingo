@@ -8,12 +8,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class Timer {
-    public int remainingtime;
+    public int time;
     public boolean paused;
     public String information;
     public Timer(){
         information = "§7Bingo §a" + Bingo.getInstance().getDescription().getVersion() + " §7by CoolePizza";
-        remainingtime = 3600;
+        time = 0;
         paused = true;
         BukkitRunnable runnable = new BukkitRunnable() {
             @Override
@@ -24,20 +24,13 @@ public class Timer {
                     });
                 }else {
                     Bukkit.getOnlinePlayers().forEach(player -> {
-                        player.spigot().sendMessage(ChatMessageType.ACTION_BAR , new TextComponent("§7Noch " + Utils.shortInteger(remainingtime)));
+                        player.spigot().sendMessage(ChatMessageType.ACTION_BAR , new TextComponent(Utils.shortInteger(time)));
                     });
-                    if (remainingtime == 0){
-                        Bingo.getInstance().end();
-                        cancel();
-                    }
+                    time++;
                 }
             }
         };
         runnable.runTaskTimer(Bingo.getInstance() , 0 , 20);
-    }
-
-    public int getRemainingtime() {
-        return remainingtime;
     }
 
     public boolean isPaused() {
