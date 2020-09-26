@@ -79,4 +79,8 @@ public class TeamManager {
             onlinePlayer.updateInventory();
         }
     }
+
+    public HashMap<UUID, Team> getTeams() {
+        return teams;
+    }
 }

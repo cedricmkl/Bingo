@@ -41,6 +41,6 @@ public class Utils {
         return string;
     }
     public static String getItemName(Material material){
-        return WordUtils.capitalize(material.name());
+        return WordUtils.capitalize(material.name().replace("_" , " ").toLowerCase());
     }
-}
+    }

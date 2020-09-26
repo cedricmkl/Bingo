@@ -47,8 +47,11 @@ public class ItemSelector {
         addNormalItem("SOUL");
         addNormalItem("DIAMOND");
         addNormalItem("WART");
+        removeNormalItem(Material.SOUL_FIRE);
         addNormalItem(Material.CRYING_OBSIDIAN);
         addNormalItem(Material.NAME_TAG);
+        removeNormalItem(Material.DIAMOND_HORSE_ARMOR);
+        removeNormalItem(Material.DIAMOND_ORE);
         addNormalItem(Material.COBWEB);
         addNormalItem(Material.SUGAR_CANE);
         addNormalItem("GLOWSTONE");

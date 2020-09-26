@@ -5,25 +5,16 @@ import de.coolepizza.bingo.commands.ItemsCommand;
 import de.coolepizza.bingo.commands.ResetCommand;
 import de.coolepizza.bingo.events.Listeners;
 import de.coolepizza.bingo.manager.BingoManager;
-import de.coolepizza.bingo.utils.Cuboid;
 import de.coolepizza.bingo.utils.ScoreboardUtils;
 import de.coolepizza.bingo.utils.Timer;
-import net.minecraft.server.v1_16_R2.DedicatedServer;
-import net.minecraft.server.v1_16_R2.MinecraftServer;
 import org.bukkit.*;
-import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.libs.org.apache.commons.io.FileUtils;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Comparator;
 import java.util.Properties;
 
 

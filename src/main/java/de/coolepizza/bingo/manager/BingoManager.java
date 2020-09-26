@@ -5,8 +5,12 @@ import de.coolepizza.bingo.team.Team;
 import de.coolepizza.bingo.team.TeamManager;
 import de.coolepizza.bingo.utils.Cuboid;
 import de.coolepizza.bingo.utils.ItemBuilder;
+import de.coolepizza.bingo.utils.Utils;
+import net.minecraft.server.v1_16_R2.MinecraftKey;
+import net.minecraft.server.v1_16_R2.SoundEffect;
 import org.bukkit.*;
 import org.bukkit.block.Block;
+import org.bukkit.craftbukkit.v1_16_R2.entity.CraftPlayer;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.UUID;
@@ -84,14 +88,26 @@ public class BingoManager {
             player.playSound(player.getLocation() , Sound.ENTITY_PLAYER_LEVELUP , 1 ,1);
             player.getInventory().clear();
             player.sendMessage(Bingo.prefix + "Die Runde startet jetzt, versuche alle Items zu bekommen! !");
-           getBedrock().getBlocks().forEach(block -> {
-                block.setType(Material.AIR);
-            });
-            for (UUID uuid : Bingo.getBingoManager().getTeamManager().getPlayersInTeam(Team.SPECTATOR)) {
-                Bukkit.getPlayer(uuid).setGameMode(GameMode.SPECTATOR);
-            }
-            Bingo.getTimer().paused = false;
         });
+        getBedrock().getBlocks().forEach(block -> {
+            block.setType(Material.AIR);
+        });
+        for (UUID uuid : Bingo.getBingoManager().getTeamManager().getPlayersInTeam(Team.SPECTATOR)) {
+            Bukkit.getPlayer(uuid).setGameMode(GameMode.SPECTATOR);
+        }
+        Bingo.getTimer().paused = false;
+    }
+    public void win(Team team){
+        Bukkit.getOnlinePlayers().forEach(player -> {
+            player.sendTitle("§aTeam " + team.getTeamid() , "hat Bingo gewonnen");
+            player.playSound(player.getLocation() , Sound.UI_TOAST_CHALLENGE_COMPLETE ,1 ,1);
+            player.sendMessage("§7-------------------------------------");
+            player.sendMessage("§lTeam " + team.getTeamid()  + " hat Bingo gewonnen!");
+            player.sendMessage("§lZeit benötigt §8- §7" + Utils.shortInteger(Bingo.getTimer().time));
+            player.sendMessage("§7-------------------------------------");
+        });
+        Bingo.getTimer().paused = true;
+        Bingo.getTimer().information = "§9Team " + team.getTeamid() + " hat Bingo gewonnen!";
     }
 
     public BingoSettings getBingosettings() {
@@ -100,5 +116,9 @@ public class BingoManager {
 
     public Cuboid getBedrock() {
         return bedrock;
+    }
+
+    public ItemManager getItemManager() {
+        return itemManager;
     }
 }

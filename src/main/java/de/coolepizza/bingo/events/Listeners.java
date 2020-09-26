@@ -45,10 +45,16 @@ public class Listeners implements Listener {
         int spawnx = (int) w.getSpawnLocation().getX();
         int spawnz = (int) w.getSpawnLocation().getZ();
 
-        int y = w.getHighestBlockYAt(spawnx , spawnz);
-        e.getPlayer().teleport(new Location(w ,spawnx+5 , y-1 , spawnz+5));
-
+        if (Bingo.getBingoManager().bingoState != BingoManager.BingoState.INGAME) {
+            int y = w.getHighestBlockYAt(spawnx, spawnz);
+            e.getPlayer().teleport(new Location(w, spawnx + 5, y - 1, spawnz + 5));
+        }
         Bingo.getBingoManager().getTeamManager().initPlayer(e.getPlayer());
+
+        Team t = Bingo.getBingoManager().getTeamManager().getTeamFromPlayer(e.getPlayer());
+        if (t != Team.SPECTATOR){
+            Bingo.getBingoManager().getItemManager().updateScoreboard(t);
+        }
     }
     @EventHandler
     public void onQuit(PlayerQuitEvent e){

@@ -17,11 +17,11 @@ public class TablistManager {
             if (teams.getPlayerNameSet().contains(p.getName())){
                 teams.getPlayerNameSet().remove(p.getName());
             }
-
         }
-            if (s.getTeam(teamname) == null){
-                createTeam(team , teamname);
+            if (s.getTeam(teamname) != null){
+                s.removeTeam(s.getTeam(teamname));
             }
+            createTeam(team , teamname);
             s.getTeam(teamname).getPlayerNameSet().add(p.getName());
             sendPackets();
     }
