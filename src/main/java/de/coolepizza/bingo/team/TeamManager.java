@@ -64,7 +64,6 @@ public class TeamManager {
                 int maxplayers = Bingo.getBingoManager().getBingosettings().getMaxplayersinteam();
 
                 ItemBuilder item = new ItemBuilder(team.getMat()).setDisplayname("§9Team " + team.getTeamid()).setLocalizedName(team.name());
-                System.out.println(players.size());
                 for (int i = 0; i < maxplayers ; i++) {
                     if (i < players.size()){
                         item.addLore("§8- §a" + Bukkit.getOfflinePlayer(players.get(i)).getName());
