@@ -6,12 +6,14 @@ import de.coolepizza.bingo.commands.TeamChatCommand;
 import de.coolepizza.bingo.commands.TopCommand;
 import de.coolepizza.bingo.events.Listeners;
 import de.coolepizza.bingo.manager.BingoManager;
+import de.coolepizza.bingo.utils.MetricsLite;
 import de.coolepizza.bingo.utils.ScoreboardUtils;
 import de.coolepizza.bingo.utils.Timer;
 import org.bukkit.*;
 import org.bukkit.craftbukkit.libs.org.apache.commons.io.FileUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.spigotmc.Metrics;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -20,6 +22,9 @@ import java.util.Properties;
 
 
 public final class Bingo extends JavaPlugin {
+    public final int BSTATS_PLUGIN_ID = 8931;
+    public static final int SPIGOT_PLUGIN_ID = 8931;
+
     private static Bingo instance;
     private static Timer timer;
     private static BingoManager bingoManager;
@@ -63,7 +68,7 @@ public final class Bingo extends JavaPlugin {
     }
     @Override
     public void onEnable() {
-
+        MetricsLite metricsLite = new MetricsLite(this, BSTATS_PLUGIN_ID);
         instance = this;
         timer = new Timer();
         bingoManager = new BingoManager();
