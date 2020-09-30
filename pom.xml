@@ -6,7 +6,7 @@
 
     <groupId>de.coolepizza</groupId>
     <artifactId>bingo</artifactId>
-    <version>1.0-DEV</version>
+    <version>1.1-RELEASE</version>
     <packaging>jar</packaging>
 
     <name>Bingo</name>

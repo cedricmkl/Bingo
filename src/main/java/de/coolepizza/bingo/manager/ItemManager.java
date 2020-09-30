@@ -34,7 +34,7 @@ public class ItemManager {
 
         for (Team value : Team.values()) {
             if (value != Team.SPECTATOR)
-                items.put(value.getTeamid(), needed);
+                items.put(value.getTeamid(), (ArrayList<Material>) needed.clone());
             updateScoreboard(value);
         }
         run();
@@ -54,8 +54,8 @@ public class ItemManager {
                         if (content != null){
                             ArrayList<Material> itemsfromteam = getItemsFromTeam(playerteam.getTeamid());
                             if (itemsfromteam.contains(content.getType())){
-                                findItem(playerteam ,content.getType() , onlinePlayer);
                                 itemsfromteam.remove(content.getType());
+                                findItem(playerteam ,content.getType() , onlinePlayer);
                                 for (Team value : Team.values()) {
                                     updateScoreboard(value);
                                 }
@@ -91,10 +91,10 @@ public class ItemManager {
                 Player player = Bukkit.getPlayer(uuid);
                 player.sendTitle("§a" + Utils.getItemName(material), "wurde gefunden");
                 player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
-                Bukkit.broadcastMessage(Bingo.prefix + who.getName() + " aus dem Team §9" + team.getTeamid() + " §ahat §9" + Utils.getItemName(material) + " §agefunden! §8(§7"
-                        + itemsnow + "§8/§7" + Bingo.getBingoManager().getBingosettings().getItems() + "§8)");
             }
         });
+        Bukkit.broadcastMessage(Bingo.prefix + who.getName() + " aus dem Team §9" + team.getTeamid() + " §ahat §9" + Utils.getItemName(material) + " §agefunden! §8(§7"
+                + itemsnow + "§8/§7" + Bingo.getBingoManager().getBingosettings().getItems() + "§8)");
     }
 
     public void updateScoreboard(Team team) {
@@ -106,8 +106,8 @@ public class ItemManager {
             if (Bukkit.getPlayer(uuid) != null) {
                 Player player = Bukkit.getPlayer(uuid);
 
-                ScoreboardUtils.setScore(14, "§9Deine Plazierung: §a" + ". Platz", player.getScoreboard());
-                ScoreboardUtils.insert(13, "§9Noch §7" + teamitems.size() + " §9Items");
+                ScoreboardUtils.setScore(14, "§9Deine Plazierung: §a" + getPlace(team) +  ". Platz", player.getScoreboard());
+                ScoreboardUtils.setScore(13, "§9Noch §7" + teamitems.size() + " §9Items" , player.getScoreboard());
 
                 ScoreboardUtils.setScore(10, "§a", player.getScoreboard());
                 ScoreboardUtils.setScore(9, "§a", player.getScoreboard());

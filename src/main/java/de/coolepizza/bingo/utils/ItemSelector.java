@@ -15,6 +15,7 @@ public class ItemSelector {
     static {
         addBaseItem("IRON");
         addBaseItem("REDSTONE");
+        removeBaseItem(Material.REDSTONE_ORE);
         addBaseItem("GOLD");
         removeBaseItem(Material.ENCHANTED_GOLDEN_APPLE);
         addBaseItem("FURNACE");
@@ -40,6 +41,9 @@ public class ItemSelector {
         addBaseItem(Material.BUCKET);
         addBaseItem(Material.SUGAR_CANE);
         addBaseItem(Material.FLINT_AND_STEEL);
+        addBaseItem("BOOK");
+        addBaseItem("PAPER");
+        addBaseItem(Material.LECTERN);
 
 
 
@@ -48,6 +52,7 @@ public class ItemSelector {
         addNormalItem("DIAMOND");
         addNormalItem("WART");
         removeNormalItem(Material.SOUL_FIRE);
+        removeNormalItem(Material.SOUL_WALL_TORCH);
         addNormalItem(Material.CRYING_OBSIDIAN);
         addNormalItem(Material.NAME_TAG);
         removeNormalItem(Material.DIAMOND_HORSE_ARMOR);
@@ -179,6 +184,11 @@ public class ItemSelector {
                     material = hard.get(new Random().nextInt(hard.size()));
                 }
                 items.add(material);
+            }
+        }
+        for (Material item : items) {
+            if (!item.isItem()){
+                return getItems(bingoDifficulty, itemsize);
             }
         }
         return items;

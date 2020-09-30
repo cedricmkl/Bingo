@@ -1,8 +1,9 @@
 package de.coolepizza.bingo;
 
 import de.coolepizza.bingo.commands.BingoCommand;
-import de.coolepizza.bingo.commands.ItemsCommand;
 import de.coolepizza.bingo.commands.ResetCommand;
+import de.coolepizza.bingo.commands.TeamChatCommand;
+import de.coolepizza.bingo.commands.TopCommand;
 import de.coolepizza.bingo.events.Listeners;
 import de.coolepizza.bingo.manager.BingoManager;
 import de.coolepizza.bingo.utils.ScoreboardUtils;
@@ -72,7 +73,8 @@ public final class Bingo extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new Listeners(), this);
         getCommand("reset").setExecutor(new ResetCommand());
         getCommand("bingo").setExecutor(new BingoCommand());
-        getCommand("items").setExecutor(new ItemsCommand());
+        getCommand("top").setExecutor(new TopCommand());
+        getCommand("teamchat").setExecutor(new TeamChatCommand());
 
         ScoreboardUtils.insert(15 , "§c");
         ScoreboardUtils.insert(14 , "§9Deine Plazierung: §7N/A");
@@ -108,11 +110,6 @@ public final class Bingo extends JavaPlugin {
         return timer;
     }
 
-    public void end() {
-        for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-            onlinePlayer.setGameMode(GameMode.SPECTATOR);
-        }
-    }
 
     public static BingoManager getBingoManager() {
         return bingoManager;

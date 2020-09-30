@@ -29,9 +29,11 @@ public class Listeners implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent e){
+        e.setJoinMessage("§a» §7" + e.getPlayer().getName() + "");
         ScoreboardUtils.setCurrentScoreboard(e.getPlayer() , "§lBINGO");
+        e.getPlayer().setPlayerListHeader("§lBINGO");
         e.getPlayer().sendMessage("§aDieser Server nutzt " + Bingo.getInstance().getDescription().getName() + " v" + Bingo.getInstance().getDescription().getVersion()  + " by CoolePizza!");
-        if (Bingo.getBingoManager().bingoState == BingoManager.BingoState.SETTINGS && e.getPlayer().hasPermission("orav.admin")){
+        if (Bingo.getBingoManager().bingoState == BingoManager.BingoState.SETTINGS && e.getPlayer().hasPermission("bingo.admin")){
             e.getPlayer().getInventory().clear();
             e.getPlayer().getInventory().addItem(new ItemBuilder(Material.NETHER_STAR).setDisplayname("§9Spiel Einstellungen").build());
         }else if (Bingo.getBingoManager().bingoState == BingoManager.BingoState.TEAM_JOIN ){
@@ -41,23 +43,30 @@ public class Listeners implements Listener {
                 e.getPlayer().getInventory().setItem(8 , new ItemBuilder(Material.LIME_DYE).setDisplayname("§aRunde starten").build());
             }
         }
-        World w =  Bukkit.getWorld("world");
-        int spawnx = (int) w.getSpawnLocation().getX();
-        int spawnz = (int) w.getSpawnLocation().getZ();
+        if (Bingo.getInstance().wasReset()) {
+            World w = Bukkit.getWorld("world");
+            int spawnx = (int) w.getSpawnLocation().getX();
+            int spawnz = (int) w.getSpawnLocation().getZ();
 
-        if (Bingo.getBingoManager().bingoState != BingoManager.BingoState.INGAME) {
-            int y = w.getHighestBlockYAt(spawnx, spawnz);
-            e.getPlayer().teleport(new Location(w, spawnx + 5, y - 1, spawnz + 5));
-        }
-        Bingo.getBingoManager().getTeamManager().initPlayer(e.getPlayer());
+            if (Bingo.getBingoManager().bingoState != BingoManager.BingoState.INGAME) {
+                int y = w.getHighestBlockYAt(spawnx, spawnz);
+                e.getPlayer().teleport(new Location(w, spawnx + 5, y - 1, spawnz + 5));
+            }
+            Bingo.getBingoManager().getTeamManager().initPlayer(e.getPlayer());
 
-        Team t = Bingo.getBingoManager().getTeamManager().getTeamFromPlayer(e.getPlayer());
-        if (t != Team.SPECTATOR){
-            Bingo.getBingoManager().getItemManager().updateScoreboard(t);
+            Team t = Bingo.getBingoManager().getTeamManager().getTeamFromPlayer(e.getPlayer());
+            if (t != Team.SPECTATOR) {
+                Bingo.getBingoManager().getItemManager().updateScoreboard(t);
+            }
+        }else {
+            if(e.getPlayer().hasPermission("orav.admin")){
+                e.getPlayer().sendMessage("§aWenn du die Welt zurücksetzen willst gebe /reset ein!");
+            }
         }
     }
     @EventHandler
     public void onQuit(PlayerQuitEvent e){
+        e.setQuitMessage("§a« §7" + e.getPlayer().getName() + "");
         if (Bingo.getBingoManager().getTeamManager().getTeamFromPlayer(e.getPlayer()) != Team.SPECTATOR && Bingo.getBingoManager().bingoState != BingoManager.BingoState.INGAME){
             Bingo.getBingoManager().getTeamManager().setTeam(e.getPlayer() , Team.SPECTATOR);
         }
@@ -69,6 +78,12 @@ public class Listeners implements Listener {
             e.setCancelled(true);
         }
     }
+
+    @EventHandler
+    public void onChat(AsyncPlayerChatEvent e){
+            e.setFormat("§a" + e.getPlayer().getName() + "§7» " + e.getMessage());
+        }
+
     @EventHandler
     public void onDamage(InventoryClickEvent e){
         if (Bingo.getTimer().isPaused()){
@@ -135,7 +150,7 @@ public class Listeners implements Listener {
         e.setCancelled(true);
     }
     @EventHandler
-    public void onBlockBreak(InventoryClickEvent e) {
+    public void onInvClick(InventoryClickEvent e) {
         if (e.getView().getTitle() == "§9Bingo §7>> §9Einstellungen"){
             e.setCancelled(true);
             ItemStack itemStack = e.getCurrentItem();
@@ -198,6 +213,8 @@ public class Listeners implements Listener {
                     e.getWhoClicked().closeInventory();
 
             }
+        }else if (e.getView().getTitle().equals("§9Bingo Items")){
+            e.setCancelled(true);
         }
     }
 

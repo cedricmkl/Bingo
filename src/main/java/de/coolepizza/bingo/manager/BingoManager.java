@@ -6,11 +6,8 @@ import de.coolepizza.bingo.team.TeamManager;
 import de.coolepizza.bingo.utils.Cuboid;
 import de.coolepizza.bingo.utils.ItemBuilder;
 import de.coolepizza.bingo.utils.Utils;
-import net.minecraft.server.v1_16_R2.MinecraftKey;
-import net.minecraft.server.v1_16_R2.SoundEffect;
 import org.bukkit.*;
 import org.bukkit.block.Block;
-import org.bukkit.craftbukkit.v1_16_R2.entity.CraftPlayer;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.UUID;
@@ -36,7 +33,7 @@ public class BingoManager {
                     int spawnx = (int) w.getSpawnLocation().getX();
                     int spawnz = (int) w.getSpawnLocation().getZ();
 
-                    int y = w.getHighestBlockYAt(spawnx , spawnz);
+                    int y = w.getHighestBlockYAt(spawnx , spawnz)+4;
                     Cuboid bedrock1 = new Cuboid(new Location(w, spawnx , y , spawnz) , new Location(w, spawnx+10 , y+4 , spawnz+10));
                     Cuboid bedrock2 = new Cuboid(new Location(w, spawnx+1 , y+1 , spawnz+1) , new Location(w, spawnx+9 , y+4 , spawnz+9));
 
