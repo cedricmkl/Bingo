@@ -23,7 +23,7 @@ import java.util.Properties;
 
 public final class Bingo extends JavaPlugin {
     public final int BSTATS_PLUGIN_ID = 8931;
-    public static final int SPIGOT_PLUGIN_ID = 8931;
+    public static final int SPIGOT_PLUGIN_ID = 84348;
 
     private static Bingo instance;
     private static Timer timer;

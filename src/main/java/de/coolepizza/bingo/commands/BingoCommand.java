@@ -10,8 +10,10 @@ import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemFlag;
 
 import java.util.ArrayList;
 
@@ -38,7 +40,7 @@ public class BingoCommand implements CommandExecutor {
                 for (Material material : Bingo.getBingoManager().getItemManager().getNeeded()) {
                     if (teamitems != null){
                         if (!teamitems.contains(material)){
-                            inventory.addItem(new ItemBuilder(Material.GREEN_STAINED_GLASS_PANE).setDisplayname("§9"+  Utils.getItemName(material)).setLore("§aDein Team hat das Item Bereits gefunden!").build());
+                            inventory.addItem(new ItemBuilder(Material.GREEN_STAINED_GLASS_PANE).setDisplayname("§9"+  Utils.getItemName(material)).setLore("§aDein Team hat das Item Bereits gefunden!").enchant(Enchantment.OXYGEN ,1).addItemFlags(ItemFlag.HIDE_ENCHANTS).build());
                         }else {
                             inventory.addItem(new ItemBuilder(material).setDisplayname("§9"+  Utils.getItemName(material)).setLore("§aFinde dieses Item!").build());
                         }
