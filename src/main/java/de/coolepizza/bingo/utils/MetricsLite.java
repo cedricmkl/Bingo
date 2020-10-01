@@ -270,7 +270,7 @@ public class MetricsLite {
                                     pluginData.add(object);
                                 }
                             } catch (ClassNotFoundException e) {
-                                // minecraft version 1.14+
+
                                 if (logFailedRequests) {
                                     this.plugin.getLogger().log(Level.SEVERE, "Encountered unexpected exception ", e);
                                 }

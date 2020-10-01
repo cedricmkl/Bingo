@@ -89,10 +89,12 @@ public class BingoManager {
         getBedrock().getBlocks().forEach(block -> {
             block.setType(Material.AIR);
         });
-        for (UUID uuid : Bingo.getBingoManager().getTeamManager().getPlayersInTeam(Team.SPECTATOR)) {
-            Bukkit.getPlayer(uuid).setGameMode(GameMode.SPECTATOR);
-        }
         Bingo.getTimer().paused = false;
+        for (UUID uuid : getTeamManager().getPlayersInTeam(Team.SPECTATOR)) {
+            if (Bukkit.getPlayer(uuid) != null){
+                Bukkit.getPlayer(uuid).setGameMode(GameMode.SPECTATOR);
+            }
+        }
     }
     public void win(Team team){
         Bukkit.getOnlinePlayers().forEach(player -> {

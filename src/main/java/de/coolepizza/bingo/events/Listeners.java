@@ -30,6 +30,7 @@ public class Listeners implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
+        Bingo.getBingoManager().getTeamManager().initPlayer(e.getPlayer());
         if (e.getPlayer().hasPermission("bingo.admin")) {
             new UpdateChecker(Bingo.getInstance(), Bingo.SPIGOT_PLUGIN_ID).getVersion(version -> {
                 if (!Bingo.getInstance().getDescription().getVersion().equalsIgnoreCase(version)) {
@@ -60,8 +61,6 @@ public class Listeners implements Listener {
                 int y = w.getHighestBlockYAt(spawnx, spawnz);
                 e.getPlayer().teleport(new Location(w, spawnx + 5, y - 1, spawnz + 5));
             }
-            Bingo.getBingoManager().getTeamManager().initPlayer(e.getPlayer());
-
             Team t = Bingo.getBingoManager().getTeamManager().getTeamFromPlayer(e.getPlayer());
             if (t != Team.SPECTATOR) {
                 Bingo.getBingoManager().getItemManager().updateScoreboard(t);
@@ -71,6 +70,10 @@ public class Listeners implements Listener {
                 e.getPlayer().sendMessage("§aWenn du die Welt zurücksetzen willst gebe /reset ein!");
             }
         }
+        if (Bingo.getBingoManager().getTeamManager().getTeamFromPlayer(e.getPlayer())== Team.SPECTATOR && Bingo.getBingoManager().bingoState == BingoManager.BingoState.INGAME){
+            e.getPlayer().sendMessage("§7Du bist nun Spectator!");
+        }
+
     }
 
     @EventHandler
