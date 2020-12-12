@@ -30,6 +30,7 @@ public class Listeners implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
+        ScoreboardUtils.setCurrentScoreboard(e.getPlayer(), "§lBINGO");
         Bingo.getBingoManager().getTeamManager().initPlayer(e.getPlayer());
         if (e.getPlayer().hasPermission("bingo.admin")) {
             new UpdateChecker(Bingo.getInstance(), Bingo.SPIGOT_PLUGIN_ID).getVersion(version -> {
@@ -39,7 +40,6 @@ public class Listeners implements Listener {
             });
         }
         e.setJoinMessage("§a» §7" + e.getPlayer().getName() + "");
-        ScoreboardUtils.setCurrentScoreboard(e.getPlayer(), "§lBINGO");
         e.getPlayer().setPlayerListHeader("§lBINGO");
         e.getPlayer().sendMessage("§aDieser Server nutzt " + Bingo.getInstance().getDescription().getName() + " v" + Bingo.getInstance().getDescription().getVersion() + " by CoolePizza!");
         if (Bingo.getBingoManager().bingoState == BingoManager.BingoState.SETTINGS && e.getPlayer().hasPermission("bingo.admin")) {
