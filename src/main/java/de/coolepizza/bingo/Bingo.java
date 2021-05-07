@@ -82,7 +82,7 @@ public final class Bingo extends JavaPlugin {
         getCommand("teamchat").setExecutor(new TeamChatCommand());
 
         ScoreboardUtils.insert(15 , "§c");
-        ScoreboardUtils.insert(14 , "§9Deine Plazierung: §7N/A");
+        ScoreboardUtils.insert(14 , "§9Deine Platzierung: §7N/A");
         ScoreboardUtils.insert(13 , "§9Noch §7N/A §9Items");
         ScoreboardUtils.insert(12 , "§9");
         ScoreboardUtils.insert(11 , "§9Items:");

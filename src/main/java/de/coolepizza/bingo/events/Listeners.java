@@ -32,13 +32,6 @@ public class Listeners implements Listener {
     public void onJoin(PlayerJoinEvent e) {
         ScoreboardUtils.setCurrentScoreboard(e.getPlayer(), "§lBINGO");
         Bingo.getBingoManager().getTeamManager().initPlayer(e.getPlayer());
-        if (e.getPlayer().hasPermission("bingo.admin")) {
-            new UpdateChecker(Bingo.getInstance(), Bingo.SPIGOT_PLUGIN_ID).getVersion(version -> {
-                if (!Bingo.getInstance().getDescription().getVersion().equalsIgnoreCase(version)) {
-                    e.getPlayer().sendMessage(Bingo.prefix + "§aEs wurde eine neuere Version gefunden (Version " + version + ") , lade diese unter " + "https://www.spigotmc.org/resources/bingo." + Bingo.SPIGOT_PLUGIN_ID + " herunter!");
-                }
-            });
-        }
         e.setJoinMessage("§a» §7" + e.getPlayer().getName() + "");
         e.getPlayer().setPlayerListHeader("§lBINGO");
         e.getPlayer().sendMessage("§aDieser Server nutzt " + Bingo.getInstance().getDescription().getName() + " v" + Bingo.getInstance().getDescription().getVersion() + " by CoolePizza!");
